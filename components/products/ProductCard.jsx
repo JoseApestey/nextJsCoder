@@ -1,5 +1,5 @@
 // ProductCard.js
-// ProductCard.js
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ const ProductCard = ({ item }) => {
                 <p className="flex flex-col">
                     <Image
                         alt={item.title}
-                        src={imageUrl}
+                        src={item.image}
                         width={288}
                         height={288}
                     />

@@ -4,20 +4,20 @@ import { usePathname } from "next/navigation";
 
 const links = [
     {
-        label: "Inicio",
-        href: "/"
-    },
-    {
-        label: "Tienda",
+        label: "Todos",
         href: "/productos/all"
     },
     {
-        label: "Quienes somos",
-        href: "/nosotros"
+        label: "TVs",
+        href: "/productos/tvs"
     },
     {
-        label: "Contacto",
-        href: "/contacto"
+        label: "Hornos",
+        href: "/productos/hornos"
+    },
+    {
+        label: "Aire",
+        href: "/productos/aires"
     }
 ];
 

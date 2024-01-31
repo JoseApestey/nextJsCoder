@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 
 import CartWidget from '../utils/cart'
+import LoginButton from '../utils/LoginButton'
 
 
 
@@ -27,6 +28,9 @@ const Header = () => {
         {
             label: "Contacto",
             href: "/contacto"
+        },
+        {
+          href: '/admin'
         }
     ];
     
@@ -62,6 +66,10 @@ const Header = () => {
                     <div>
                         <CartWidget />
                         
+                    
+                      <Link href={"/admin"}>
+                        <LoginButton />
+                      </Link>
                     </div>
                 </div>
             </header>
