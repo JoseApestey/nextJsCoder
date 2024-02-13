@@ -2,44 +2,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-
-
+import { useAuthContext } from "@/utils/context/AuthContext"
+import { LINKS } from '@/utils/constants'
+import { usePathname } from 'next/navigation'
 import CartWidget from '../utils/cart'
+import { ADMIN_PATH } from '@/utils/constants'
+import LogoutButton from '../utils/Logout'
 import LoginButton from '../utils/LoginButton'
 
-
-
-
 const Header = () => {
-    
-    const LINKS = [
-        {
-            label: "Inicio",
-            href: "/"
-        },
-        {
-            label: "Tienda",
-            href: "/productos/all"
-        },
-        {
-            label: "Quienes somos",
-            href: "/nosotros"
-        },
-        {
-            label: "Contacto",
-            href: "/contacto"
-        },
-        {
-          href: '/admin'
-        }
-    ];
-    
-   
-    
-  
+    const pathName = usePathname();
+    const { userId } = useAuthContext();
+
     return (
-        
-            
+        pathName === ADMIN_PATH ?
+            null :
             <header className="w-full bg-gray-700">
                 <div className="container m-auto py-4 flex justify-between items-center">
                     <Link href={"/"}>
@@ -65,11 +42,7 @@ const Header = () => {
                     </nav>
                     <div>
                         <CartWidget />
-                        
-                    
-                      <Link href={"/admin"}>
-                        <LoginButton />
-                      </Link>
+                        {userId.logged ? <LogoutButton /> : <LoginButton/>}
                     </div>
                 </div>
             </header>

@@ -1,0 +1,36 @@
+
+import Image from 'next/image';
+import AmountSelect from '@/components/products/AmountSelect';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '@/utils/firebase';
+
+
+
+const ProductDetail = async ({ slug }) => {
+    const item = await fetch(`http://localhost:3000/api/productos/detail/${ slug }`, {
+      cache:'no-store',
+      next:{
+        revalidate: 0
+      }
+    }).then( res => res.json())
+}
+
+return (
+  <div>
+    <section>
+      <div>
+        <Image 
+        src={item.image}
+        alt={item.title}
+        width={860}
+        height={860}
+        />
+      </div>
+      <div>
+        <h2>
+          
+        </h2>
+      </div>
+    </section>
+  </div>
+)

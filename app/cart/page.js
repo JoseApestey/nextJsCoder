@@ -1,4 +1,4 @@
-
+import CartTable from "@/components/cart/CartTable"
 
 export const metadata = {
 	title: 'Carrito!',
@@ -7,10 +7,10 @@ export const metadata = {
 
 const CartPage = () => {
     return (
-        <main className="container m-auto text-center">
+        <main className="container m-auto">
             <h1 className="text-3xl font-bold my-8">Lista de Productos</h1>
             <hr />
-            
+            <CartTable />
         </main>
     )
 }

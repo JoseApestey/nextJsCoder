@@ -1,42 +1,32 @@
-'use client'
+"use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LinkProducts } from "@/utils/constants";
+import { useCart } from "@/utils/context/CartContext";
+import { useAuthContext } from "@/utils/context/AuthContext";
+import { useEffect } from "react";
 
-const links = [
-    {
-        label: "Todos",
-        href: "/productos/all"
-    },
-    {
-        label: "TVs",
-        href: "/productos/tvs"
-    },
-    {
-        label: "Hornos",
-        href: "/productos/hornos"
-    },
-    {
-        label: "Aire",
-        href: "/productos/aires"
-    }
-];
+const CategoryMenu = () => {
+    const pathname = usePathname();
+    const { setCart, userId } = useAuthContext();
+    const { setDbCart } = useCart();
+    useEffect(() => {
+        if(userId.logged) setDbCart(userId.uid);
+    }, []);
 
-const CategoriesMenu = () => {
-  const pathname = usePathname();
+    return (
+        <aside className="flex flex-col gap-3">
+            {LinkProducts.map(link => (
+                    <Link 
+                        key={link.label} 
+                        href={link.value}
+                        className={`${pathname === link.value ? "font-semibold border-b" :''} py-2`}
+                    >
+                        {link.label}
+                    </Link>
+                ))}
+        </aside>
+    )
+}
 
-  return (
-    <aside className="flex flex-col w-[200px] pr-2">
-      {links.map((link) => (
-        <div key={link.label} className={`${
-          pathname === link.href ? "font-semibold border-b" : ""
-        } py-2`}>
-          <Link href={link.href}>
-            <p>{link.label} </p>
-          </Link>
-        </div>
-      ))}
-    </aside>
-  );
-};
-
-export default CategoriesMenu;
+export default CategoryMenu

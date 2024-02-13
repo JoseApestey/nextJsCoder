@@ -1,3 +1,53 @@
+import { doc, getDoc, getDocs, addDoc, collection, updateDoc, query, where, deleteDoc } from "firebase/firestore";
+import { db } from "./firebase";
+
+export const getDbCart = async (uid) => {
+    const docRef = doc(db, 'cart', uid);
+    const cartDoc = await getDoc(docRef);
+    return cartDoc.data();
+};
+
+export const setSale = async (data) => {
+    const collectionRef = collection(db, 'sales');
+    await addDoc(collectionRef, data);
+};
+
+export const updateStock = async (cart) => {
+    cart.forEach(async (element) => {
+        let docRef = doc(db, 'productos', element.slug);
+        element.stock = element.stock - element.amount;
+        await updateDoc(docRef, element);
+    });
+}
+
+export const getCategory = async (category) => {
+    const productosRef = collection(db, "productos")
+    const q = category === 'all' 
+                ? productosRef
+                : query(productosRef, where('type', '==', category))
+    const querySnapshot = await getDocs(q)
+
+    const docs = querySnapshot.docs.map(doc => doc.data());
+    return docs;
+}
+
+export const AddProductToCar = async (uid, cart) => {
+    const docRef = doc(db, "cart", uid);
+    return updateDoc(docRef, { cart: cart });
+};
+
+export const getDetail = async (slug) => {
+    const docRef = doc(db, "productos", slug)
+    const docSnapshot = await getDoc(docRef)
+    
+    return docSnapshot.data();
+};
+
+export const DelProduct = async (slug) => {
+    const documentoRef = doc(db, 'productos', slug);
+    await deleteDoc(documentoRef);
+}
+
 export const LINKS = [
     {
         label: "Inicio",
@@ -42,3 +92,5 @@ export const LinkProducts = [
     { label: "Aires", value: "/productos/aires" },
     { label: "Hornos", value: "/productos/hornos" }
 ];
+
+export const ADMIN_PATH = '/admin'
