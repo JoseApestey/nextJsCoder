@@ -1,21 +1,15 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+
 import ProductCard from "./ProductCard";
-import { db } from "@/utils/firebase";
 
-const getProducts = async (categories) => {
-    const productsRef = collection(db, "productos");
-    const q =
-        categories === "all"
-            ? productsRef
-            : query(productsRef, where("type", "==", categories));
-
-    const querySnapshot = await getDocs(q);
-
-    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
-};
 
 const ProductList = async ({ category }) => {
-    const items = await getProducts(category);
+    const items = await fetch(`http://localhost:3000/api/productos/${category}`, {
+        cache: 'no-store',
+        next:{
+            revalidate:0
+        }
+    }).then(res => res.json())
+
     return (
         <section className="container m-auto flex justify-center items-center gap-12 flex-wrap">
             {
@@ -23,6 +17,11 @@ const ProductList = async ({ category }) => {
             }
         </section>
     )
-}
+
+};
+
+
+    
+
 
 export default ProductList

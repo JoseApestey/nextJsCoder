@@ -8,5 +8,13 @@ export async function GET(_, { params }) {
     const docRef = doc(db, "productos", slug)
     const docSnapshot = await getDoc(docRef)
 
-    return NextResponse.json(docSnapshot.data())
+    
+    if (docSnapshot.exists() && docSnapshot.data()) {
+        
+        const data = docSnapshot.data();
+        return NextResponse.json(data);
+    } else {
+        
+        return NextResponse.json({ error: 'Documento no encontrado o sin datos' }, { status: 404 });
+    }
 }
